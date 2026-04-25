@@ -13,6 +13,7 @@ export default function Navigation() {
     { href: "/l2",         label: t.nav.l2 },
     { href: "/l3",         label: t.nav.l3 },
     { href: "/comparison", label: t.nav.comparison },
+    { href: "/demo",       label: t.nav.demo, highlight: true },
   ];
 
   return (
@@ -47,15 +48,16 @@ export default function Navigation() {
         <div className="flex items-center gap-0.5 overflow-x-auto">
           {navItems.map((item) => {
             const active = pathname === item.href;
+            const isHighlight = "highlight" in item && item.highlight;
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className="px-3 py-1.5 rounded-md text-xs font-medium transition-all whitespace-nowrap"
                 style={{
-                  color: active ? "#fff" : "var(--text-secondary)",
-                  background: active ? "rgba(59,130,246,0.15)" : "transparent",
-                  borderBottom: active ? "1px solid rgba(59,130,246,0.5)" : "1px solid transparent",
+                  color: active ? "#fff" : isHighlight ? "#06b6d4" : "var(--text-secondary)",
+                  background: active ? "rgba(59,130,246,0.15)" : isHighlight ? "rgba(6,182,212,0.08)" : "transparent",
+                  borderBottom: active ? "1px solid rgba(59,130,246,0.5)" : isHighlight ? "1px solid rgba(6,182,212,0.25)" : "1px solid transparent",
                 }}
               >
                 {item.label}

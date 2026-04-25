@@ -18,6 +18,7 @@ export const translations: Record<Lang, Translations> = {
       l2: "L2 系统架构",
       l3: "L3 微观交互",
       comparison: "行业对比",
+      demo: "🎬 案例演示",
       dtcBadge: "DTC 全渠道架构参考",
     },
     home: {
@@ -135,6 +136,7 @@ export const translations: Record<Lang, Translations> = {
       l2: "L2 System Arch",
       l3: "L3 Micro Interactions",
       comparison: "Industry Comparison",
+      demo: "🎬 Live Demo",
       dtcBadge: "DTC Omnichannel Architecture",
     },
     home: {
