@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #080c14;
+  --bg-secondary: #0d1420;
+  --bg-card: #0f1924;
+  --bg-card-hover: #152033;
+  --border: #1e2d45;
+  --border-subtle: #121e2e;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+  --accent-blue: #3b82f6;
+  --accent-indigo: #6366f1;
+  --accent-cyan: #06b6d4;
+  --accent-glow: rgba(59, 130, 246, 0.15);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #2a3f5f; }
+
+pre, code {
+  font-family: var(--font-geist-mono), "Fira Code", "Cascadia Code", monospace;
+}
+pre { font-size: 0.8rem; line-height: 1.75; tab-size: 2; }
+code { font-size: 0.85em; }
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.glow-border {
+  box-shadow:
+    inset 0 0 0 1px rgba(59,130,246,0.2),
+    0 0 24px rgba(59,130,246,0.07);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-dot {
+  0%,100% { opacity: 0.4; transform: scale(0.85); }
+  50%     { opacity: 1;   transform: scale(1.1); }
+}
+@keyframes flow-dash {
+  to { stroke-dashoffset: -24; }
+}
+
+.animate-fade-up { animation: fadeInUp 0.5s ease forwards; }
+.animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+/* Syntax highlight token colours */
+.token-keyword { color: #c792ea; }
+.token-string  { color: #c3e88d; }
+.token-comment { color: #546e7a; font-style: italic; }
+.token-number  { color: #f78c6c; }
+.token-tag     { color: #f07178; }
+.token-attr    { color: #ffcb6b; }
+.token-value   { color: #c3e88d; }
