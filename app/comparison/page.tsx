@@ -1,5 +1,6 @@
-import { comparisonData } from "@/lib/data";
+"use client";
 import PageHeader from "@/components/PageHeader";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const industryColors: Record<string, { bg: string; border: string; text: string }> = {
   blue:  { bg: "rgba(59,130,246,0.08)",  border: "rgba(59,130,246,0.3)",  text: "#3b82f6" },
@@ -7,23 +8,88 @@ const industryColors: Record<string, { bg: string; border: string; text: string 
   amber: { bg: "rgba(245,158,11,0.06)",  border: "rgba(245,158,11,0.25)", text: "#f59e0b" },
 };
 
-const riskLevel = [
-  { label: "超卖风险", value: "极高", color: "#ef4444" },
-  { label: "全损风险", value: "极高", color: "#ef4444" },
-  { label: "停线风险", value: "极高", color: "#ef4444" },
-];
+const tableData = {
+  zh: {
+    dimensions: ["主要缓冲点", "关键追踪维度", "系统交互重点", "致命异常风险"],
+    industries: [
+      {
+        name: "消费电子", subtitle: "本文蓝本", icon: "📱", color: "blue", highlight: true,
+        values: ["成品仓库 (RDC)", "SN 序列号 (IMEI/MAC)", "OMS 高并发拆单路由", "热门新品秒杀导致的系统超卖超发"],
+      },
+      {
+        name: "生鲜冷链", subtitle: "备选扩充", icon: "🥦", color: "green", highlight: false,
+        values: ["极短，几乎不设缓冲", "批次号 (Batch) 与效期", "IoT 平台实时温湿度上报", "运输途中制冷机组宕机导致全损"],
+      },
+      {
+        name: "汽车制造 JIT", subtitle: "备选扩充", icon: "🚗", color: "amber", highlight: false,
+        values: ["供应商线边仓 (VMI)", "零件号 (Part Number)", "ERP MRP 运算与供应商 Kanban 拉动", "某个小零件缺货导致整条总装线停工"],
+      },
+    ],
+    jsonSample: `{
+  "industries": [
+    {
+      "name": "消费电子",
+      "buffer": "RDC 成品仓库",
+      "tracking": "SN 序列号 (IMEI/MAC)",
+      "systemFocus": "OMS 高并发拆单路由",
+      "fatalRisk": "秒杀导致系统超卖超发"
+    },
+    {
+      "name": "生鲜冷链",
+      "buffer": "极短，几乎不设缓冲",
+      "tracking": "批次号 (Batch) 与效期",
+      "systemFocus": "IoT 实时温湿度上报",
+      "fatalRisk": "制冷机组宕机导致全损"
+    }
+  ]
+}`,
+  },
+  en: {
+    dimensions: ["Primary Buffer Point", "Key Tracking Dimension", "System Focus", "Fatal Risk"],
+    industries: [
+      {
+        name: "Consumer Electronics", subtitle: "This guide's scenario", icon: "📱", color: "blue", highlight: true,
+        values: ["Finished goods warehouse (RDC)", "Serial number (IMEI / MAC)", "OMS high-concurrency order routing & split", "Flash-sale-induced oversell / over-shipment"],
+      },
+      {
+        name: "Fresh Cold Chain", subtitle: "Optional extension", icon: "🥦", color: "green", highlight: false,
+        values: ["Minimal — almost no buffer", "Batch number & expiry date", "IoT platform real-time temp/humidity reporting", "Refrigeration unit failure causing total loss in transit"],
+      },
+      {
+        name: "Automotive JIT", subtitle: "Optional extension", icon: "🚗", color: "amber", highlight: false,
+        values: ["Supplier lineside VMI warehouse", "Part number (PN)", "ERP MRP calculation & supplier Kanban pull", "One missing small part halts the entire assembly line"],
+      },
+    ],
+    jsonSample: `{
+  "industries": [
+    {
+      "name": "Consumer Electronics",
+      "buffer": "RDC finished goods warehouse",
+      "tracking": "Serial number (IMEI/MAC)",
+      "systemFocus": "OMS high-concurrency order routing",
+      "fatalRisk": "Flash sale oversell / over-shipment"
+    },
+    {
+      "name": "Fresh Cold Chain",
+      "buffer": "Minimal — almost no buffer",
+      "tracking": "Batch number & expiry date",
+      "systemFocus": "IoT real-time temp/humidity reporting",
+      "fatalRisk": "Refrigeration failure → total cargo loss"
+    }
+  ]
+}`,
+  },
+};
 
 export default function ComparisonPage() {
+  const { lang, t } = useLanguage();
+  const comp = t.comparison;
+  const data = tableData[lang];
+
   return (
     <div className="grid-bg min-h-screen">
       <div className="max-w-7xl mx-auto px-6 pt-12 pb-24">
-        <PageHeader
-          level="参数"
-          title="行业差异化对比参数表"
-          en="Industry Comparison Parameters"
-          desc="不同行业的供应链在缓冲策略、追踪维度、系统侧重点和致命风险上存在本质差异。本表可作为扩充行业场景的 JSON 数据结构构建基础。"
-          color="#f59e0b"
-        />
+        <PageHeader level={comp.level} title={comp.title} en={comp.en} desc={comp.desc} color="#f59e0b" />
 
         {/* Main comparison table */}
         <section className="mb-16">
@@ -31,11 +97,11 @@ export default function ComparisonPage() {
             <table className="w-full text-xs border-collapse" style={{ minWidth: 640 }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid var(--border)" }}>
-                  <th className="text-left p-4 font-semibold w-36"
+                  <th className="text-left p-4 font-semibold w-40"
                     style={{ background: "var(--bg-card)", color: "var(--text-muted)" }}>
-                    参数维度
+                    {lang === "zh" ? "参数维度" : "Dimension"}
                   </th>
-                  {comparisonData.industries.map((ind) => {
+                  {data.industries.map((ind) => {
                     const c = industryColors[ind.color];
                     return (
                       <th key={ind.name} className="text-center p-4 font-semibold"
@@ -58,15 +124,14 @@ export default function ComparisonPage() {
                 </tr>
               </thead>
               <tbody>
-                {comparisonData.dimensions.map((dim, di) => (
-                  <tr key={dim}
-                    style={{ borderBottom: "1px solid var(--border-subtle)" }}
+                {data.dimensions.map((dim, di) => (
+                  <tr key={dim} style={{ borderBottom: "1px solid var(--border-subtle)" }}
                     className="transition-colors hover:bg-white/[0.01]">
                     <td className="p-4 font-semibold"
                       style={{ background: "var(--bg-card)", color: "var(--text-secondary)", borderRight: "1px solid var(--border)" }}>
                       {dim}
                     </td>
-                    {comparisonData.industries.map((ind) => {
+                    {data.industries.map((ind) => {
                       const c = industryColors[ind.color];
                       return (
                         <td key={ind.name} className="p-4 text-center leading-relaxed"
@@ -76,11 +141,7 @@ export default function ComparisonPage() {
                           }}>
                           {di === 3 ? (
                             <span className="inline-block px-2 py-1 rounded text-[10px] leading-snug"
-                              style={{
-                                background: "rgba(239,68,68,0.08)",
-                                color: "#f87171",
-                                border: "1px solid rgba(239,68,68,0.2)",
-                              }}>
+                              style={{ background: "rgba(239,68,68,0.08)", color: "#f87171", border: "1px solid rgba(239,68,68,0.2)" }}>
                               {ind.values[di]}
                             </span>
                           ) : di === 1 ? (
@@ -102,12 +163,11 @@ export default function ComparisonPage() {
 
         {/* Risk cards */}
         <section className="mb-16">
-          <h2 className="text-sm font-semibold uppercase tracking-widest mb-6"
-            style={{ color: "var(--text-muted)" }}>
-            致命异常风险对比 · Fatal Risk Analysis
+          <h2 className="text-sm font-semibold uppercase tracking-widest mb-6" style={{ color: "var(--text-muted)" }}>
+            {comp.tableTitle}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {comparisonData.industries.map((ind) => {
+            {data.industries.map((ind) => {
               const c = industryColors[ind.color];
               return (
                 <div key={ind.name} className="p-5 rounded-xl"
@@ -121,7 +181,7 @@ export default function ComparisonPage() {
                   </div>
                   <div className="p-3 rounded-lg text-xs leading-relaxed"
                     style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.15)", color: "#fca5a5" }}>
-                    <span className="font-semibold block mb-1" style={{ color: "#ef4444" }}>⚡ 致命风险</span>
+                    <span className="font-semibold block mb-1" style={{ color: "#ef4444" }}>{comp.riskLabel}</span>
                     {ind.values[3]}
                   </div>
                 </div>
@@ -130,11 +190,10 @@ export default function ComparisonPage() {
           </div>
         </section>
 
-        {/* JSON data hint */}
+        {/* JSON hint */}
         <section>
-          <h2 className="text-sm font-semibold uppercase tracking-widest mb-4"
-            style={{ color: "var(--text-muted)" }}>
-            JSON 数据结构参考 · Data Structure Hint
+          <h2 className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: "var(--text-muted)" }}>
+            {comp.jsonTitle}
           </h2>
           <div className="rounded-xl overflow-hidden" style={{ border: "1px solid var(--border)" }}>
             <div className="flex items-center gap-2 px-5 py-2.5"
@@ -148,24 +207,7 @@ export default function ComparisonPage() {
             </div>
             <div style={{ background: "#080c14" }}>
               <pre className="p-5 text-xs leading-7 overflow-x-auto" style={{ color: "var(--text-secondary)", margin: 0 }}>
-{`{
-  <span style="color:#c792ea">"industries"</span>: [
-    {
-      <span style="color:#c792ea">"name"</span>: <span style="color:#c3e88d">"消费电子"</span>,
-      <span style="color:#c792ea">"buffer"</span>: <span style="color:#c3e88d">"RDC 成品仓库"</span>,
-      <span style="color:#c792ea">"tracking"</span>: <span style="color:#c3e88d">"SN 序列号 (IMEI/MAC)"</span>,
-      <span style="color:#c792ea">"systemFocus"</span>: <span style="color:#c3e88d">"OMS 高并发拆单路由"</span>,
-      <span style="color:#c792ea">"fatalRisk"</span>: <span style="color:#c3e88d">"秒杀导致系统超卖超发"</span>
-    },
-    {
-      <span style="color:#c792ea">"name"</span>: <span style="color:#c3e88d">"生鲜冷链"</span>,
-      <span style="color:#c792ea">"buffer"</span>: <span style="color:#c3e88d">"极短，几乎不设缓冲"</span>,
-      <span style="color:#c792ea">"tracking"</span>: <span style="color:#c3e88d">"批次号 (Batch) 与效期"</span>,
-      <span style="color:#c792ea">"systemFocus"</span>: <span style="color:#c3e88d">"IoT 实时温湿度上报"</span>,
-      <span style="color:#c792ea">"fatalRisk"</span>: <span style="color:#c3e88d">"制冷机组宕机导致全损"</span>
-    }
-  ]
-}`}
+                {data.jsonSample}
               </pre>
             </div>
           </div>
