@@ -30,7 +30,11 @@ export default function SystemDetailClient({ system: s }: Props) {
 
         {/* ── Breadcrumb ── */}
         <div className="flex items-center gap-2 text-xs" style={{ color: "var(--text-muted)" }}>
-          <Link href="/l2" className="hover:underline" style={{ color: "var(--text-secondary)" }}>
+          <Link href="/flow" className="hover:underline" style={{ color: "var(--text-secondary)" }}>
+            {lang === "zh" ? "系统流程" : "System Flow"}
+          </Link>
+          <span>/</span>
+          <Link href="/flow/l2" className="hover:underline" style={{ color: "var(--text-secondary)" }}>
             {lang === "zh" ? "L2 系统架构" : "L2 System Arch"}
           </Link>
           <span>/</span>
@@ -206,8 +210,8 @@ export default function SystemDetailClient({ system: s }: Props) {
 
         {/* ── Back link ── */}
         <div className="pt-4 border-t" style={{ borderColor: "var(--border)" }}>
-          <Link href="/l2" className="text-xs hover:underline" style={{ color: "var(--text-muted)" }}>
-            ← {lang === "zh" ? "返回 L2 系统架构" : "Back to L2 System Architecture"}
+          <Link href="/flow/l2" className="text-xs hover:underline" style={{ color: "var(--text-muted)" }}>
+            ← {lang === "zh" ? "返回系统架构" : "Back to System Architecture"}
           </Link>
         </div>
 
