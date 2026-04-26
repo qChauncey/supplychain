@@ -6,25 +6,26 @@ export type Translations = Record<string, any>;
 export const translations: Record<Lang, Translations> = {
   zh: {
     site: {
-      title: "全球供应链架构手册",
-      badge: "系统级架构参考 · 全渠道 DTC 供应链",
+      title: "供应链架构手册",
+      badge: "系统级架构参考 · 采购 / 计划 / 运输 / 系统流程",
       description:
-        "面向供应链系统架构师与全栈开发者的系统级可视化底层参考资料。场景蓝本：全球高端消费电子品牌（参考 Apple / Huawei）的全渠道 DTC 供应链体系。",
-      scenario: "场景蓝本：全球高端消费电子品牌（参考 Apple / Huawei）全渠道直营供应链体系",
+        "面向供应链系统架构师与全栈开发者的系统级可视化参考资料。涵盖采购、计划、运输、仓储四大核心领域，并以全球高端消费电子 DTC 场景为蓝本呈现系统级交互细节。",
+      scenario: "涵盖供应链全域：采购管理 · 供应链计划 · 系统流程架构 · 运输管理",
     },
     nav: {
       overview: "概览",
-      l1: "L1 业务流",
-      l2: "L2 系统架构",
-      l3: "L3 微观交互",
-      comparison: "行业对比",
+      procurement: "采购",
+      planning: "计划",
+      flow: "系统流程",
+      transportation: "运输",
       systems: "系统详情",
       demo: "🎬 案例演示",
+      badge: "供应链架构参考",
       dtcBadge: "DTC 全渠道架构参考",
     },
     home: {
-      heroTitle1: "全球电子制造",
-      heroTitle2: "DTC 供应链架构手册",
+      heroTitle1: "供应链系统架构",
+      heroTitle2: "从采购到交付的全域参考手册",
       usageNote:
         "在使用前端可视化图表库时，请将 L2 系统架构 作为画布宏观网络图的数据源，将 L3 微观交互 作为双击某个特定系统后展开的底层时序和说明面板的数据源。",
       usageLabel: "使用建议：",
@@ -126,24 +127,25 @@ export const translations: Record<Lang, Translations> = {
   en: {
     site: {
       title: "Supply Chain Architecture Guide",
-      badge: "System-Level Architecture Reference · Omnichannel DTC Supply Chain",
+      badge: "System-Level Reference · Procurement / Planning / Transport / Flow",
       description:
-        "A system-level visual reference for supply chain architects and full-stack developers. Scenario: a global premium consumer electronics brand (ref. Apple / Huawei) DTC omnichannel supply chain.",
-      scenario: "Scenario: Global premium consumer electronics brand (ref. Apple / Huawei) DTC direct retail supply chain",
+        "A system-level visual reference for supply chain architects and full-stack developers. Covers procurement, planning, transportation, and warehousing — with a DTC consumer electronics scenario as the detailed system architecture reference.",
+      scenario: "Full supply chain coverage: Procurement · Planning · System Flow & Architecture · Transportation",
     },
     nav: {
       overview: "Overview",
-      l1: "L1 Business Flow",
-      l2: "L2 System Arch",
-      l3: "L3 Micro Interactions",
-      comparison: "Industry Comparison",
+      procurement: "Procurement",
+      planning: "Planning",
+      flow: "System Flow",
+      transportation: "Transport",
       systems: "Systems",
       demo: "🎬 Live Demo",
+      badge: "Supply Chain Architecture Reference",
       dtcBadge: "DTC Omnichannel Architecture",
     },
     home: {
-      heroTitle1: "Global Electronics Manufacturing",
-      heroTitle2: "DTC Supply Chain Architecture Guide",
+      heroTitle1: "Supply Chain Architecture",
+      heroTitle2: "End-to-End Reference: Procurement to Delivery",
       usageNote:
         "When using front-end visualization libraries, use the L2 System Architecture as the data source for the macro network graph canvas, and use L3 Micro Interactions as the data source for the sequence/detail panel that expands when clicking a specific system node.",
       usageLabel: "Usage tip:",

@@ -3,19 +3,31 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+const GROUP_COLORS: Record<string, string> = {
+  procurement:    "#3b82f6",
+  planning:       "#6366f1",
+  flow:           "#8b5cf6",
+  transportation: "#a855f7",
+};
+
 export default function Navigation() {
   const pathname = usePathname();
   const { lang, t, toggle } = useLanguage();
 
   const navItems = [
-    { href: "/",           label: t.nav.overview },
-    { href: "/l1",         label: t.nav.l1 },
-    { href: "/l2",         label: t.nav.l2 },
-    { href: "/l3",         label: t.nav.l3 },
-    { href: "/comparison", label: t.nav.comparison },
-    { href: "/systems/erp", label: t.nav.systems },
-    { href: "/demo",       label: t.nav.demo, highlight: true },
+    { href: "/",               label: t.nav.overview,        group: "home" },
+    { href: "/procurement",    label: t.nav.procurement,     group: "procurement" },
+    { href: "/planning",       label: t.nav.planning,        group: "planning" },
+    { href: "/flow",           label: t.nav.flow,            group: "flow" },
+    { href: "/transportation", label: t.nav.transportation,  group: "transportation" },
+    { href: "/flow/demo",      label: t.nav.demo,            group: "demo", highlight: true },
   ];
+
+  function isActive(href: string, group: string) {
+    if (group === "home") return pathname === "/";
+    if (group === "flow") return pathname === "/flow" || pathname.startsWith("/flow/") || pathname.startsWith("/systems/");
+    return pathname === href || pathname.startsWith(href + "/");
+  }
 
   return (
     <nav
@@ -40,7 +52,7 @@ export default function Navigation() {
               {lang === "zh" ? "供应链架构手册" : "Supply Chain Guide"}
             </p>
             <p className="text-[10px] leading-none mt-0.5" style={{ color: "var(--text-muted)" }}>
-              {lang === "zh" ? "Supply Chain Architecture" : "全球 DTC 供应链体系"}
+              {lang === "zh" ? "Supply Chain Architecture" : "Architecture Reference"}
             </p>
           </div>
         </Link>
@@ -48,19 +60,31 @@ export default function Navigation() {
         {/* Nav links */}
         <div className="flex items-center gap-0.5 overflow-x-auto">
           {navItems.map((item) => {
-            const active = item.href.startsWith("/systems")
-              ? pathname.startsWith("/systems")
-              : pathname === item.href;
+            const active      = isActive(item.href, item.group);
             const isHighlight = "highlight" in item && item.highlight;
+            const groupColor  = GROUP_COLORS[item.group];
+
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className="px-3 py-1.5 rounded-md text-xs font-medium transition-all whitespace-nowrap"
                 style={{
-                  color: active ? "#fff" : isHighlight ? "#06b6d4" : "var(--text-secondary)",
-                  background: active ? "rgba(59,130,246,0.15)" : isHighlight ? "rgba(6,182,212,0.08)" : "transparent",
-                  borderBottom: active ? "1px solid rgba(59,130,246,0.5)" : isHighlight ? "1px solid rgba(6,182,212,0.25)" : "1px solid transparent",
+                  color: active
+                    ? groupColor ?? "#fff"
+                    : isHighlight
+                    ? "#06b6d4"
+                    : "var(--text-secondary)",
+                  background: active
+                    ? `${groupColor ?? "#3b82f6"}18`
+                    : isHighlight
+                    ? "rgba(6,182,212,0.08)"
+                    : "transparent",
+                  borderBottom: active
+                    ? `1px solid ${groupColor ?? "#3b82f6"}60`
+                    : isHighlight
+                    ? "1px solid rgba(6,182,212,0.25)"
+                    : "1px solid transparent",
                 }}
               >
                 {item.label}
@@ -80,7 +104,7 @@ export default function Navigation() {
             }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse inline-block" />
-            {t.nav.dtcBadge}
+            {t.nav.badge}
           </div>
 
           {/* Language toggle */}
