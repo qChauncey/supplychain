@@ -1,8 +1,13 @@
 "use client";
+import Link from "next/link";
 import { l2SystemNodes, l2Edges } from "@/lib/data";
 import PageHeader from "@/components/PageHeader";
 import SystemGraph from "@/components/SystemGraph";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+const SYSTEM_ID_MAP: Record<string, string> = {
+  ERP: "erp", OMS: "oms", WMS: "wms", TMS: "tms", SRM: "srm",
+};
 
 const nodeColorMap: Record<string, { bg: string; border: string; text: string }> = {
   blue:   { bg: "rgba(59,130,246,0.08)",  border: "rgba(59,130,246,0.35)",  text: "#3b82f6" },
@@ -88,10 +93,12 @@ export default function L2Page() {
             {l2SystemNodes.map((node, i) => {
               const c = nodeColorMap[node.color];
               const n = nodes[i];
+              const sysId = SYSTEM_ID_MAP[n.label];
               return (
-                <div
+                <Link
                   key={node.id}
-                  className="p-5 rounded-xl transition-all hover:-translate-y-0.5"
+                  href={sysId ? `/systems/${sysId}` : "#"}
+                  className="block p-5 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg"
                   style={{ background: c.bg, border: `1px solid ${c.border}` }}
                 >
                   <div className="flex items-start justify-between mb-3">
@@ -99,20 +106,30 @@ export default function L2Page() {
                       <h3 className="text-lg font-bold font-mono" style={{ color: c.text }}>{n.label}</h3>
                       <p className="text-[10px]" style={{ color: "var(--text-muted)" }}>{n.sublabel}</p>
                     </div>
-                    <span
-                      className="text-[10px] px-2 py-0.5 rounded font-medium"
-                      style={{ background: "var(--bg-secondary)", color: "var(--text-muted)", border: "1px solid var(--border-subtle)" }}
-                    >
-                      {n.role}
-                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className="text-[10px] px-2 py-0.5 rounded font-medium"
+                        style={{ background: "var(--bg-secondary)", color: "var(--text-muted)", border: "1px solid var(--border-subtle)" }}
+                      >
+                        {n.role}
+                      </span>
+                      {sysId && (
+                        <span className="text-[10px] px-1.5 py-0.5 rounded"
+                          style={{ background: `${c.text}15`, color: c.text, border: `1px solid ${c.text}30` }}>
+                          →
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{n.description}</p>
-                </div>
+                </Link>
               );
             })}
 
             {/* WCS node */}
-            <div className="p-5 rounded-xl" style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.25)" }}>
+            <Link href="/systems/wcs"
+              className="block p-5 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg"
+              style={{ background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.25)" }}>
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <h3 className="text-lg font-bold font-mono" style={{ color: "#f59e0b" }}>WCS / PLC</h3>
@@ -120,15 +137,21 @@ export default function L2Page() {
                     {lang === "zh" ? "仓库控制系统 / 可编程控制器" : "Warehouse Control System / PLC"}
                   </p>
                 </div>
-                <span
-                  className="text-[10px] px-2 py-0.5 rounded font-medium"
-                  style={{ background: "var(--bg-secondary)", color: "var(--text-muted)", border: "1px solid var(--border-subtle)" }}
-                >
-                  {l2.wcsRole}
-                </span>
+                <div className="flex items-center gap-1.5">
+                  <span
+                    className="text-[10px] px-2 py-0.5 rounded font-medium"
+                    style={{ background: "var(--bg-secondary)", color: "var(--text-muted)", border: "1px solid var(--border-subtle)" }}
+                  >
+                    {l2.wcsRole}
+                  </span>
+                  <span className="text-[10px] px-1.5 py-0.5 rounded"
+                    style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b", border: "1px solid rgba(245,158,11,0.3)" }}>
+                    →
+                  </span>
+                </div>
               </div>
               <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{l2.wcsDesc}</p>
-            </div>
+            </Link>
           </div>
         </section>
 

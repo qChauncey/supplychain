@@ -1,5 +1,6 @@
 "use client";
 import { useCallback } from "react";
+import { useRouter } from "next/navigation";
 import {
   ReactFlow,
   addEdge,
@@ -198,12 +199,20 @@ const initialEdges: Edge[] = [
 ];
 
 export default function SystemGraph() {
+  const router = useRouter();
   const [nodes, , onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
+  );
+
+  const onNodeDoubleClick = useCallback(
+    (_: React.MouseEvent, node: Node) => {
+      router.push(`/systems/${node.id}`);
+    },
+    [router]
   );
 
   return (
@@ -215,6 +224,7 @@ export default function SystemGraph() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onNodeDoubleClick={onNodeDoubleClick}
         fitView
         attributionPosition="bottom-right"
         colorMode="dark"

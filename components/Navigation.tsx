@@ -13,6 +13,7 @@ export default function Navigation() {
     { href: "/l2",         label: t.nav.l2 },
     { href: "/l3",         label: t.nav.l3 },
     { href: "/comparison", label: t.nav.comparison },
+    { href: "/systems/erp", label: t.nav.systems },
     { href: "/demo",       label: t.nav.demo, highlight: true },
   ];
 
@@ -47,7 +48,9 @@ export default function Navigation() {
         {/* Nav links */}
         <div className="flex items-center gap-0.5 overflow-x-auto">
           {navItems.map((item) => {
-            const active = pathname === item.href;
+            const active = item.href.startsWith("/systems")
+              ? pathname.startsWith("/systems")
+              : pathname === item.href;
             const isHighlight = "highlight" in item && item.highlight;
             return (
               <Link
