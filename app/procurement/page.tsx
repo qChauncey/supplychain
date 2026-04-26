@@ -88,7 +88,7 @@ export default function ProcurementPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {TOPICS.map((t) => (
-              <div key={t.title.en} className="rounded-xl p-5"
+              <div key={t.title.en} className="glass-card rounded-xl p-5"
                 style={{ background: "var(--bg-card)", border: `1px solid ${t.color}20` }}>
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-xl">{t.icon}</span>
@@ -115,7 +115,7 @@ export default function ProcurementPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {KEY_SYSTEMS.map((s) => (
-              <div key={s.label} className="rounded-xl p-5"
+              <div key={s.label} className="glass-card rounded-xl p-5"
                 style={{ background: "var(--bg-card)", border: `1px solid ${s.color}30` }}>
                 <p className="text-lg font-bold font-mono mb-1" style={{ color: s.color }}>{s.label}</p>
                 <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{s.desc[lang]}</p>

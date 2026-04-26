@@ -42,7 +42,7 @@ export default function SystemDetailClient({ system: s }: Props) {
         </div>
 
         {/* ── Hero ── */}
-        <div className="rounded-2xl p-8 animate-fade-up"
+        <div className="glass-panel rounded-2xl p-8 animate-fade-up"
           style={{ background: "var(--bg-card)", border: `1px solid ${s.color}30` }}>
           <div className="flex flex-wrap items-start gap-6">
             <div className="flex items-center justify-center w-16 h-16 rounded-xl text-3xl shrink-0"
@@ -73,7 +73,7 @@ export default function SystemDetailClient({ system: s }: Props) {
             zh="关键性能指标" en="Key Performance Metrics" lang={lang} />
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
             {s.metrics.map((m) => (
-              <div key={m.value} className="rounded-xl p-4"
+              <div key={m.value} className="glass-card rounded-xl p-4"
                 style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
                 <p className="text-2xl font-bold font-mono mb-1" style={{ color: s.color }}>{m.value}</p>
                 <p className="text-xs font-semibold mb-1.5" style={{ color: "var(--text-primary)" }}>{t(m.label)}</p>
@@ -89,7 +89,7 @@ export default function SystemDetailClient({ system: s }: Props) {
             zh="核心功能模块" en="Core Functional Modules" lang={lang} />
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
             {s.coreModules.map((m) => (
-              <div key={m.id} className="rounded-xl p-5"
+              <div key={m.id} className="glass-card rounded-xl p-5"
                 style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xl">{m.icon}</span>
@@ -123,7 +123,7 @@ export default function SystemDetailClient({ system: s }: Props) {
             zh="架构设计要点" en="Architecture Design Notes" lang={lang} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             {s.architecturePoints.map((ap, i) => (
-              <div key={i} className="rounded-xl p-5"
+              <div key={i} className="glass-card rounded-xl p-5"
                 style={{ background: "var(--bg-card)", border: `1px solid ${s.color}20` }}>
                 <h3 className="text-sm font-semibold mb-2" style={{ color: s.color }}>{t(ap.title)}</h3>
                 <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>{t(ap.desc)}</p>
@@ -142,7 +142,7 @@ export default function SystemDetailClient({ system: s }: Props) {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
             {s.integrationPoints.map((ip, i) => (
-              <div key={i} className="rounded-lg p-4 flex gap-3"
+              <div key={i} className="glass-card rounded-lg p-4 flex gap-3"
                 style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
                 <div className="shrink-0 mt-0.5">
                   <span className="text-xs font-mono px-2 py-0.5 rounded"
@@ -172,7 +172,7 @@ export default function SystemDetailClient({ system: s }: Props) {
             zh="核心数据实体" en="Key Data Entities" lang={lang} />
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 mt-4">
             {s.keyEntities.map((e) => (
-              <div key={e.name} className="rounded-lg p-4"
+              <div key={e.name} className="glass-card rounded-lg p-4"
                 style={{ background: "var(--bg-card)", border: "1px solid var(--border)" }}>
                 <p className="text-xs font-bold font-mono mb-1.5" style={{ color: s.color }}>{e.name}</p>
                 {e.table && (
@@ -192,7 +192,7 @@ export default function SystemDetailClient({ system: s }: Props) {
             {s.pitfalls.map((p, i) => {
               const sev = SEVERITY_COLORS[p.severity];
               return (
-                <div key={i} className="rounded-xl p-5"
+                <div key={i} className="glass-card rounded-xl p-5"
                   style={{ background: sev.bg, border: `1px solid ${sev.border}` }}>
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded uppercase"
