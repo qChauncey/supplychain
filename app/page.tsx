@@ -103,7 +103,7 @@ export default function HomePage() {
             <Link
               key={s.href}
               href={s.href}
-              className="group block p-6 rounded-xl transition-all duration-200 hover:-translate-y-0.5"
+              className="group glass-card block p-6 rounded-xl transition-all duration-200 hover:-translate-y-0.5"
               style={{ background: "var(--bg-card)", border: `1px solid ${s.color}20` }}
             >
               <div className="flex items-start justify-between mb-4">

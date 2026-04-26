@@ -86,7 +86,7 @@ export default function FlowPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
           {SUB_SECTIONS.map((s) => (
             <Link key={s.href} href={s.href}
-              className="group rounded-xl p-6 transition-all hover:-translate-y-1 hover:shadow-xl"
+              className="group glass-card rounded-xl p-6 transition-all hover:-translate-y-1"
               style={{ background: "var(--bg-card)", border: `1px solid ${s.color}25` }}>
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded font-mono"
